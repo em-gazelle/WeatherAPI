@@ -1,0 +1,17 @@
+body {
+	background:maroon;
+	color: pink;
+}
+
+#footer {
+	color:white;
+}
+
+a {
+	text-decoration: none;
+	color: white;
+}	
+
+a:hover {
+	color:pink;
+}
