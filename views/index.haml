@@ -9,6 +9,11 @@
 		%h1 Welcome...
 		%p
 		to my website made with Sinatra and HAML
+	
+	%form
+		%input.where{:type => "search", :name => "where", :placeholder => "City"}
+		%input{:type => "submit", :value => "Search"}
+
 	#footer
 		%br 
 		%br

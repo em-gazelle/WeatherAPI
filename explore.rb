@@ -1,4 +1,4 @@
-#require 'bundler/setup'
+require 'bundler/setup'
 require 'rubygems'
 require 'sinatra'
 #api - weather data
@@ -15,10 +15,23 @@ get '/' do
 	haml :index, :locals => {:say => say}
 end
 
+get '/about' do
+  "I'm running on Version " + Sinatra::VERSION
+end
 
 graph "YesterdaySF", :prefix => '/graphs' do
+	#variables obtained from HTML form
+	#used to find api's url to find weather data
+	
+#	haml :index
+				
 
-	open('http://api.wunderground.com/api/245e798812323642/yesterday/q/CA/San_Francisco.json') do |f| 
+	state = "LA"
+	city = "New_Orleans"
+	finalString = "http://api.wunderground.com/api/245e798812323642/yesterday/q/" + state + "/" + city + ".json"
+	urlFinal = URI.parse(finalString)
+	#finding temp/weather data 
+	open(urlFinal) do |f| 
 				json_string = f.read 
 				parsed_json = JSON.parse(json_string) 
 				#display for every hour
@@ -37,19 +50,13 @@ graph "YesterdaySF", :prefix => '/graphs' do
 					
 					hourN = hour.to_i
 					humN = hum.to_i
-				
+					#creating hash for graph
 					hourHumidity[hourN] = humN
 				end
 				#hourHumidity.each { |x, y| puts "#{x}: #{y}" }
 
-					#buys = [4, 2, 1, 4, 5]
-				#	sales = [5,2,6,2,1]
-
-				#	experiment = { 1=>2, 6=>5, 3=>7, 4=>2, 5=>1}
-
 				line "Humidity Percentage", hourHumidity
-				#line "Buys", experiment
-				#line "Sales", sales
-				#hourHumidity
 		end
 end
+
+
